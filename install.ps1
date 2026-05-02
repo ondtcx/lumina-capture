@@ -3,6 +3,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new()
 
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoBuildExe = Join-Path $projectRoot "build\$Configuration\LuminaCapture.exe"
@@ -53,3 +54,9 @@ Write-Host "Instalación completada." -ForegroundColor Green
 Write-Host "Ejecutable: $installDir\LuminaCapture.exe"
 Write-Host "Capturas por defecto: $defaultSaveDir"
 Write-Host "Inicio automático habilitado."
+
+$launchNow = Read-Host "¿Deseas abrir Lumina Capture ahora? (S/N)"
+if ($launchNow -in @('S', 's', 'Y', 'y')) {
+    Start-Process (Join-Path $installDir "LuminaCapture.exe")
+    Write-Host "Lumina Capture se está iniciando..." -ForegroundColor Green
+}

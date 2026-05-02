@@ -1,6 +1,7 @@
 param()
 
 $ErrorActionPreference = "Stop"
+[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new()
 
 $owner = "ondtcx"
 $repo = "lumina-capture"
