@@ -1,30 +1,142 @@
 # Lumina Capture
 
-Herramienta de capturas para Windows escrita en C++ con Win32 API y GDI+.
+Lumina Capture es una herramienta de capturas para Windows escrita en **C++ Win32 + GDI+**, diseñada para ofrecer **alto rendimiento**, **bajo consumo** y una experiencia de uso pulida.
 
-## Características
+## Qué hace
 
-- Captura por recorte, ventana o pantalla completa
-- Copia automática al portapapeles
-- Guardado en PNG o JPG
-- Toast visual minimalista
-- Atajo global configurable
+- Captura por **recorte**, **ventana** y **pantalla completa**
+- Soporte **multi-monitor**
+- Copia automática al **portapapeles**
+- Guardado en **PNG** o **JPG**
+- **Toast** visual de confirmación
+- **Atajo global configurable**
+- Inicio automático con Windows
 - Configuración persistente en `%APPDATA%\LuminaCapture\config.ini`
 
-## Compilación
+---
 
-Compila con CMake desde VS Code o con MSVC:
+## Instalación para usuario final
+
+### Opción recomendada: instalación remota con un solo comando
+
+```powershell
+iwr https://raw.githubusercontent.com/ondtcx/lumina-capture/main/install-remote.ps1 -OutFile install-lumina.ps1; powershell -ExecutionPolicy Bypass -File .\install-lumina.ps1
+```
+
+Este flujo:
+
+- busca la última **release estable**
+- usa **pre-release** como fallback si todavía no existe una estable
+- descarga el ZIP oficial desde GitHub
+- pide confirmación antes de instalar
+- instala la app y limpia temporales
+
+### Opción manual desde release descargada
+
+1. Descarga el ZIP desde la sección de releases.
+2. Descomprímelo.
+3. Abre PowerShell en la carpeta.
+4. Ejecuta:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+El instalador:
+
+- copia `LuminaCapture.exe` a `%LOCALAPPDATA%\Programs\LuminaCapture`
+- crea `%USERPROFILE%\Pictures\screenshots` si no existe
+- inicializa la configuración si no existe
+- registra la app para iniciar con Windows
+
+---
+
+## Uso
+
+- Ejecuta Lumina Capture desde el acceso instalado o al iniciar sesión en Windows.
+- Usa el atajo global configurado para abrir la interfaz de captura.
+- Por defecto, las imágenes se guardan en:
+
+```text
+%USERPROFILE%\Pictures\screenshots
+```
+
+- Puedes cambiar:
+  - carpeta de guardado
+  - formato de imagen
+  - hotkey global
+
+desde **Configuración** en el icono de la bandeja del sistema.
+
+---
+
+## Desinstalación
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
+```
+
+La desinstalación:
+
+- elimina el inicio automático
+- elimina el ejecutable instalado
+- conserva la configuración en `%APPDATA%\LuminaCapture`
+
+Si quieres un reset total, borra también manualmente:
+
+```text
+%APPDATA%\LuminaCapture
+```
+
+---
+
+## Configuración
+
+La configuración se guarda en:
+
+```text
+%APPDATA%\LuminaCapture\config.ini
+```
+
+Actualmente almacena:
+
+- ruta de guardado
+- formato de imagen
+- hotkey global personalizada
+
+---
+
+## Desarrollo local
+
+### Compilación
 
 ```powershell
 cmake -B build -S .
 cmake --build build --config Release
 ```
 
-## Instalación local
+### Nota sobre Windows y CMake
+
+Si `cmake` no está disponible en tu PowerShell normal, usa la ruta completa del binario instalado por Visual Studio Build Tools:
+
+```powershell
+& "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" --build build --config Release
+```
+
+También puedes compilar desde:
+
+- **VS Code + CMake Tools**
+- **Developer PowerShell for Visual Studio**
+
+### Instalación local desde el repo
+
+Después de compilar:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
+
+---
 
 ## Empaquetado de release
 
@@ -34,22 +146,22 @@ Después de compilar en `Release`, genera el ZIP distribuible con:
 powershell -ExecutionPolicy Bypass -File .\package-release.ps1
 ```
 
-Esto crea:
+Esto crea un archivo como:
 
-- `dist\LuminaCapture-v0.1.0-win64.zip`
+```text
+dist\LuminaCapture-v0.1.0-win64.zip
+```
 
-## Releases automáticas con GitHub Actions
+---
+
+## GitHub Actions
 
 El proyecto incluye dos workflows:
 
-- `CI`: compila en `Release` en cada push a `main` y en cada Pull Request.
-- `Release`: publica automáticamente una release cuando empujas un tag `v*`.
+- **CI**: compila en `Release` en cada push a `main` y en cada Pull Request
+- **Release**: publica automáticamente una release cuando empujas un tag `v*`
 
-### Flujo recomendado
-
-1. Haz commit de tus cambios.
-2. Empuja `main`.
-3. Crea y empuja un tag semántico:
+### Flujo recomendado para nuevas versiones
 
 ```powershell
 git tag v0.2.0
@@ -58,25 +170,15 @@ git push origin v0.2.0
 
 GitHub Actions compilará `Release`, generará el ZIP y publicará la release automáticamente.
 
-## Desinstalación local
+---
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
-```
+## Estado del proyecto
 
-El instalador:
+Lumina Capture ya está lista para:
 
-- copia el ejecutable a `%LOCALAPPDATA%\Programs\LuminaCapture`
-- crea la carpeta por defecto `%USERPROFILE%\Pictures\screenshots`
-- inicializa el archivo de configuración si no existe
-- registra la app para iniciar con Windows
+- instalación local
+- instalación remota con un solo comando
+- pre-releases manuales o automáticas
+- distribución por GitHub Releases
 
-La desinstalación:
-
-- elimina el inicio automático
-- elimina el ejecutable instalado
-- conserva la configuración en `%APPDATA%\LuminaCapture`
-
-## Estado actual
-
-La base del producto ya está lista para publicar pre-releases manuales en GitHub.
+La siguiente iteración natural del producto es seguir refinando la experiencia visual del diálogo de configuración y ampliar el roadmap funcional.

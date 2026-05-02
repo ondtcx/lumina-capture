@@ -3,20 +3,26 @@
 
 IDI_APP_ICON ICON "app.ico"
 
-IDD_SETTINGS_DIALOG DIALOGEX 0, 0, 260, 140
+IDD_SETTINGS_DIALOG DIALOGEX 0, 0, 320, 196
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Configuración - Lumina Capture"
+CAPTION "Configuraci\363n - Lumina Capture"
 FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
-    LTEXT           "Ruta de guardado:", IDC_STATIC, 10, 10, 100, 10
-    EDITTEXT        IDC_PATH_EDIT, 10, 22, 185, 14, ES_AUTOHSCROLL
-    PUSHBUTTON      "Explorar", IDC_BROWSE_BTN, 200, 22, 50, 14
+    LTEXT           "LUMINA CAPTURE", IDC_TITLE_STATIC, 16, 12, 140, 12
+    LTEXT           "Ajusta la ruta, el formato y el atajo global.", IDC_HINT_STATIC, 16, 28, 220, 10
 
-    LTEXT           "Formato de imagen:", IDC_STATIC, 10, 45, 100, 10
-    COMBOBOX        IDC_FORMAT_COMBO, 10, 57, 100, 50, CBS_DROPDOWNLIST | WS_TABSTOP
+    LTEXT           "Ruta de guardado", IDC_STATIC, 16, 52, 100, 10
+    EDITTEXT        IDC_PATH_EDIT, 16, 64, 226, 16, ES_AUTOHSCROLL
+    PUSHBUTTON      "Explorar", IDC_BROWSE_BTN, 248, 64, 56, 16
+    PUSHBUTTON      "Abrir carpeta", IDC_OPEN_FOLDER_BTN, 204, 86, 100, 16
 
-    LTEXT           "Atajo de teclado:", IDC_STATIC, 10, 80, 100, 10
-    CONTROL         "", IDC_HOTKEY_COMBO, "msctls_hotkey32", WS_CHILD | WS_VISIBLE | WS_TABSTOP, 10, 92, 120, 14
+    LTEXT           "Formato de imagen", IDC_STATIC, 16, 114, 100, 10
+    COMBOBOX        IDC_FORMAT_COMBO, 16, 126, 96, 60, CBS_DROPDOWNLIST | WS_TABSTOP
 
-    PUSHBUTTON      "Guardar", IDC_SAVE_BTN, 190, 115, 60, 15
+    LTEXT           "Atajo global", IDC_STATIC, 132, 114, 100, 10
+    CONTROL         "", IDC_HOTKEY_COMBO, "msctls_hotkey32", WS_CHILD | WS_VISIBLE | WS_TABSTOP, 132, 126, 112, 14
+
+    PUSHBUTTON      "Restaurar", IDC_DEFAULTS_BTN, 16, 164, 72, 18
+    PUSHBUTTON      "Cancelar", IDC_CANCEL_BTN, 182, 164, 56, 18
+    DEFPUSHBUTTON   "Guardar", IDC_SAVE_BTN, 244, 164, 60, 18
 END
