@@ -17,7 +17,7 @@ Compila con CMake desde VS Code o con MSVC:
 
 ```powershell
 cmake -B build -S .
-cmake --build build --config Debug
+cmake --build build --config Release
 ```
 
 ## Instalación local
@@ -25,6 +25,18 @@ cmake --build build --config Debug
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
+
+## Empaquetado de release
+
+Después de compilar en `Release`, genera el ZIP distribuible con:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\package-release.ps1
+```
+
+Esto crea:
+
+- `dist\LuminaCapture-v0.1.0-win64.zip`
 
 ## Desinstalación local
 
@@ -47,6 +59,4 @@ La desinstalación:
 
 ## Estado actual
 
-Pendientes recomendados:
-
-- pipeline para publicar releases en GitHub
+La base del producto ya está lista para publicar pre-releases manuales en GitHub.
