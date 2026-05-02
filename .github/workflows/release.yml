@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure CMake
+        run: cmake -S . -B build
+
+      - name: Build Release
+        run: cmake --build build --config Release
+
+      - name: Generate release notes file if missing
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $notesFile = "RELEASE_NOTES_$tag.md"
+          if (-not (Test-Path $notesFile)) {
+            @"
+          # Lumina Capture $tag
+
+          Release automática generada por GitHub Actions.
+          "@ | Set-Content -Path $notesFile -Encoding UTF8
+          }
+
+      - name: Package release zip
+        shell: pwsh
+        run: .\package-release.ps1 -Version "${{ github.ref_name }}" -Configuration Release
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/LuminaCapture-${{ github.ref_name }}-win64.zip
+          generate_release_notes: true

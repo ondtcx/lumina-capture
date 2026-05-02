@@ -38,6 +38,26 @@ Esto crea:
 
 - `dist\LuminaCapture-v0.1.0-win64.zip`
 
+## Releases automáticas con GitHub Actions
+
+El proyecto incluye dos workflows:
+
+- `CI`: compila en `Release` en cada push a `main` y en cada Pull Request.
+- `Release`: publica automáticamente una release cuando empujas un tag `v*`.
+
+### Flujo recomendado
+
+1. Haz commit de tus cambios.
+2. Empuja `main`.
+3. Crea y empuja un tag semántico:
+
+```powershell
+git tag v0.2.0
+git push origin v0.2.0
+```
+
+GitHub Actions compilará `Release`, generará el ZIP y publicará la release automáticamente.
+
 ## Desinstalación local
 
 ```powershell
