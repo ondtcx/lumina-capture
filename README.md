@@ -26,6 +26,12 @@ cmake --build build --config Debug
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
+## Desinstalación local
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
+```
+
 El instalador:
 
 - copia el ejecutable a `%LOCALAPPDATA%\Programs\LuminaCapture`
@@ -33,9 +39,14 @@ El instalador:
 - inicializa el archivo de configuración si no existe
 - registra la app para iniciar con Windows
 
+La desinstalación:
+
+- elimina el inicio automático
+- elimina el ejecutable instalado
+- conserva la configuración en `%APPDATA%\LuminaCapture`
+
 ## Estado actual
 
 Pendientes recomendados:
 
 - pipeline para publicar releases en GitHub
-- script de desinstalación
